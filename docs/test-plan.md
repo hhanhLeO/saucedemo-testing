@@ -35,7 +35,7 @@
 
 SauceDemo is a demo e-commerce web application provided by Sauce Labs for practicing software testing. Users can log in, browse products, add products to a cart and complete a checkout flow.
 
-This document describes the plan for testing SauceDemo, covering **manual functional testing, UI/visual testing, cross-browser testing, basic non-functional checks (performance, accessibility, usability) and UI test automation**. It defines the scope, approach, resources, schedule and criteria for the test activities.
+This document describes the plan for testing SauceDemo, covering **manual functional testing, UI/visual testing, basic non-functional checks (performance, accessibility, usability) and UI test automation**. It defines the scope, approach, resources, schedule and criteria for the test activities.
 
 ---
 
@@ -44,7 +44,7 @@ This document describes the plan for testing SauceDemo, covering **manual functi
 - Verify that the core user flows (login, product browsing, cart, checkout, logout) work as expected.
 - Detect, document and report defects with clear reproduction steps and evidence.
 - Evaluate the behavior of the application for each provided test account, including accounts with intentionally injected defects.
-- Verify consistent behavior across the supported browsers.
+- Verify the core flows on Google Chrome (the only browser in scope).
 - Perform basic checks on page performance, accessibility and usability.
 - Build an automated regression suite for the critical flows and run it in a CI pipeline.
 - Provide information about product quality through a Test Summary (Completion) Report.
@@ -92,8 +92,11 @@ SauceDemo does not provide an official requirements specification. The test basi
 | **Cart**                     | Items in cart, cart badge, remove item, continue shopping, checkout                                  |
 | **Checkout**                 | Information form (step one), overview and price calculation (step two), order completion             |
 | **Side Menu**                | All Items, About, Logout, Reset App State                                                            |
-| **Cross-browser**            | Chrome                                                                                               |
-| **Non-functional (basic)**   | Page load observation, accessibility checks, usability observations                                  |
+| **UI / Visual**              | Layout, images, labels and alignment compared with `standard_user`                                   |
+| **Accessibility (basic)**    | Keyboard-only navigation, visible focus, automated checks (Lighthouse, axe)                          |
+| **Performance (basic)**      | Page load time observation for a single user (target: see section 5.2)                               |
+| **Usability (basic)**        | Clarity of messages, navigation and form behavior                                                    |
+| **Browser**                  | Google Chrome                                                                                        |
 | **Automation**               | Automated regression tests for critical flows, executed in CI                                        |
 
 ### 4.2 Out of Scope
@@ -126,10 +129,10 @@ Component and integration testing are not applicable because the source code is 
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | **Functional testing**              | Black-box testing of all in-scope features against the derived requirements                                        |
 | **UI / visual testing**             | Check layout, images, labels and alignment; compare `visual_user` with `standard_user`                             |
-| **Cross-browser testing**           | Execute a selected set of high-priority test cases on all supported browsers                                       |
+| **Browser testing**                 | Execute the high-priority test cases on Google Chrome (the only browser in scope)                                  |
 | **Usability testing (heuristic)**   | Evaluate clarity of messages, navigation and form behavior                                                         |
 | **Accessibility testing (basic)**   | Run automated accessibility checks (e.g. Lighthouse, axe) and keyboard-only navigation                             |
-| **Performance observation (basic)** | Measure page load with Lighthouse and observe `performance_glitch_user` delays (single user, no load generation)   |
+| **Performance observation (basic)** | Measure page load with Lighthouse and observe `performance_glitch_user` delays (single user, no load generation). Target: the Products page is displayed within **3 seconds** after clicking 'Login' (assumed, see section 15) |
 | **Regression testing**              | Re-run the automated suite and high-priority manual tests after any change in test scripts or observed app changes |
 | **Confirmation testing**            | Re-test defects if the application behavior changes                                                                |
 
@@ -242,7 +245,7 @@ No real personal or payment data is used.
 - At least 95% of all planned test cases have been executed.
 - All defects found have been logged with evidence.
 - Every derived requirement is covered by at least one test case (100% requirements coverage).
-- The automated regression suite passes for `standard_user` on all configured browsers.
+- The automated regression suite passes for `standard_user` on Chromium.
 - The Test Summary (Completion) Report has been written.
 
 ### 8.3 Suspension and Resumption Criteria
@@ -280,12 +283,11 @@ Each defect report contains: ID, title, module, environment, test case reference
 
 ### 9.4 Priority Levels
 
-| Priority        | Definition                     |
-| --------------- | ------------------------------ |
-| **P1 – Urgent** | Must be fixed immediately      |
-| **P2 – High**   | Must be fixed before release   |
-| **P3 – Medium** | Should be fixed if time allows |
-| **P4 – Low**    | Can be deferred                |
+| Priority   | Definition                     |
+| ---------- | ------------------------------ |
+| **High**   | Must be fixed before release   |
+| **Medium** | Should be fixed if time allows |
+| **Low**    | Can be deferred                |
 
 ---
 
@@ -298,7 +300,7 @@ Each defect report contains: ID, title, module, environment, test case reference
 | R3  | No official requirements, leading to wrong expected results          | Project | High       | Medium | Use `standard_user` as reference behavior; document derived requirements and assumptions |
 | R4  | Incorrect price or tax calculation at checkout                       | Product | Medium     | High   | Test price calculation with multiple product combinations                                |
 | R5  | Cart items added or removed incorrectly                              | Product | Medium     | High   | State transition testing of the cart; test with all accounts                             |
-| R6  | Inconsistent behavior across browsers                                | Product | Low        | Medium | Cross-browser execution of high-priority tests                                           |
+| R6  | Defects specific to other browsers are not found (only Chrome is tested) | Product | Low        | Medium | Report Chrome-only coverage as a limitation in the Test Summary Report               |
 | R7  | Flaky automated tests due to delays (`performance_glitch_user`)      | Project | Medium     | Medium | Use Playwright auto-waiting; avoid fixed waits; isolate slow-user tests                  |
 | R8  | Protected pages accessible without login                             | Product | Low        | High   | Access control test cases for all protected URLs                                         |
 
@@ -323,7 +325,7 @@ Each defect report contains: ID, title, module, environment, test case reference
 | 2. Analysis                         | Derive requirements and test scenarios                     | Week 1    | `test-scenarios.md`                      |
 | 3. Design                           | Write test cases using test techniques                     | Week 2    | `test-cases.xlsx`                        |
 | 4. Manual execution                 | Execute test cases with all accounts; exploratory sessions | Week 3    | Execution results, bug reports, evidence |
-| 5. Cross-browser and non-functional | Cross-browser runs, Lighthouse and accessibility checks    | Week 3    | Results and findings                     |
+| 5. Non-functional                   | Lighthouse, accessibility and performance checks           | Week 3    | Results and findings                     |
 | 6. Automation                       | Build Playwright framework and regression suite; set up CI | Weeks 4–5 | Automation code, CI workflow             |
 | 7. Completion                       | Analyze results, write summary report and lessons learned  | Week 6    | `test-summary-report.md`                 |
 
@@ -370,6 +372,7 @@ Each defect report contains: ID, title, module, environment, test case reference
 - The behavior of `standard_user` represents the intended behavior of the application.
 - The test accounts and password remain available during the testing period.
 - Product data (names, prices) remain stable during testing.
+- The Products page should be displayed within 3 seconds after login. SauceDemo defines no performance requirement; this target is based on common web usability guidelines.
 
 ### Constraints
 
