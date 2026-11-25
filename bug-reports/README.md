@@ -1,6 +1,6 @@
 # Bug Reports – SauceDemo
 
-All bugs were found during manual testing of https://www.saucedemo.com. Status stays **Open** because the application is not under the tester's control.
+All bugs were found during testing of https://www.saucedemo.com (BUG-001 to BUG-017 manually, BUG-018 by the automated tests). Status stays **Open** because the application is not under the tester's control.
 
 **Severity** = impact on the user · **Priority** = urgency of fixing.
 
@@ -11,8 +11,8 @@ All bugs were found during manual testing of https://www.saucedemo.com. Status s
 | Critical  | 2      |
 | High      | 6      |
 | Medium    | 7      |
-| Low       | 2      |
-| **Total** | **17** |
+| Low       | 3      |
+| **Total** | **18** |
 
 ## Bug List
 
@@ -35,3 +35,4 @@ All bugs were found during manual testing of https://www.saucedemo.com. Status s
 | [BUG-015](BUG-015.md) | [Inventory] visual_user: top-left product shows a dog image instead of its product image                                                         | `visual_user`             | Medium   | Low      | TC-ACC-09                       |
 | [BUG-016](BUG-016.md) | [UI] visual_user: layout defects on Products and Cart pages (button overflow, tilted/misaligned icons, indented names, Checkout button position) | `visual_user`             | Low      | Low      | TC-ACC-09, TC-ACC-10            |
 | [BUG-017](BUG-017.md) | [Performance] performance_glitch_user: Products page takes about 5 s to load after login (target: 3 s)                                           | `performance_glitch_user` | Medium   | Medium   | TC-ACC-11                       |
+| [BUG-018](BUG-018.md) | [Checkout] Item total is shown with floating-point digits ($103.96000000000001) for some product combinations                                    | `standard_user`           | Low      | Medium   | TC-CHK-16                       |
