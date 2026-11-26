@@ -15,7 +15,7 @@ Manual testing project for the demo e-commerce web application [SauceDemo](https
 | ---------------------------------------- | ----------------------------------------------------------------- |
 | [Test Plan](docs/test-plan.md)           | Scope, approach, derived requirements, entry/exit criteria, risks |
 | [Test Scenarios](docs/test-scenarios.md) | 39 test scenarios traced to 14 derived requirements               |
-| [Test Cases](docs/test-cases.xlsx)       | 95 test cases with execution results ([CSV view](docs/test-cases.csv)) |
+| [Test Cases](docs/test-cases.xlsx)       | 95 test cases with execution results ([Markdown view](docs/test-cases.md)) |
 | [Bug Reports](bug-reports/README.md)     | 18 bug reports with steps to reproduce and evidence               |
 | [Test Summary Report](docs/test-summary-report.md) | Results, defect analysis, exit criteria and recommendations |
 
@@ -58,7 +58,8 @@ npm test
 saucedemo-testing/
 ├── docs/
 │   ├── test-plan.md          # Test plan
-│   ├── test-cases.xlsx       # Test cases and execution results (+ test-cases.csv)
+│   ├── test-cases.xlsx       # Test cases and execution results (source)
+│   ├── test-cases.md         # Generated from test-cases.xlsx for reading on GitHub
 │   ├── test-summary-report.md  # Test summary (completion) report
 │   └── test-scenarios.md     # Test scenarios and requirements coverage
 ├── bug-reports/
@@ -70,7 +71,11 @@ saucedemo-testing/
 │   ├── performance/          # Chrome DevTools performance traces
 │   └── lighthouse/           # Lighthouse reports (HTML)
 ├── automation/               # Playwright + TypeScript tests (see automation/README.md)
+├── scripts/
+│   └── export_test_cases.py  # Generates docs/test-cases.md from docs/test-cases.xlsx
 └── .github/workflows/        # CI: runs the Playwright tests on push and pull request
 ```
+
+After changing `docs/test-cases.xlsx`, regenerate the Markdown view with `python scripts/export_test_cases.py` (requires `openpyxl`).
 
 Evidence files are named `BUG-XXX_<description>.<ext>` after the bug report they belong to. Evidence of a passed test case without a bug (e.g. Lighthouse reports) is named after the test case: `TC-XXX_<description>.<ext>`.

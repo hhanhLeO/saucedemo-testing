@@ -4,7 +4,7 @@
 | -------------------------- | -------------------------------------------------------------------------------------- |
 | **Project**                | SauceDemo Testing (Portfolio Project)                                                  |
 | **Application under test** | https://www.saucedemo.com                                                              |
-| **Related documents**      | [Test Plan](test-plan.md) · [Test Cases](test-cases.xlsx) ([CSV view](test-cases.csv)) |
+| **Related documents**      | [Test Plan](test-plan.md) · [Test Cases](test-cases.xlsx) ([Markdown view](test-cases.md)) |
 | **Author**                 | Hanh Le                                                                                |
 | **Version / Date**         | 1.0 / 30/10/2026                                                                       |
 
